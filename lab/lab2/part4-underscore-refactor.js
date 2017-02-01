@@ -31,15 +31,26 @@
   var minEnrollment = 300;
 
 
-  // clean data
-  for (var i = 0; i < schools.length - 1; i++) {
-    // If we have '19104 - 1234', splitting and taking the first (0th) element
-    // as an integer should yield a zip in the format above
-    if (typeof schools[i].ZIPCODE === 'string') {
-      split = schools[i].ZIPCODE.split(' ');
-      normalized_zip = parseInt(split[0]);
-      schools[i].ZIPCODE = normalized_zip;
-    }
+  // // clean data
+  // for (var i = 0; i < schools.length - 1; i++) {
+  //   // If we have '19104 - 1234', splitting and taking the first (0th) element
+  //   // as an integer should yield a zip in the format above
+  //   if (typeof schools[i].ZIPCODE === 'string') {
+  //     split = schools[i].ZIPCODE.split(' ');
+  //     normalized_zip = parseInt(split[0]);
+  //     schools[i].ZIPCODE = normalized_zip;
+  //   }
+
+    // clean data
+    _.each(schools,function(each){
+      // If we have '19104 - 1234', splitting and taking the first (0th) element
+      // as an integer should yield a zip in the format above
+      if (typeof each.ZIPCODE === 'string') {
+        split = each.ZIPCODE.split(' ');
+        normalized_zip = parseInt(split[0]);
+        each.ZIPCODE = normalized_zip;
+      }
+    })
 
     // Check out the use of typeof here — this was not a contrived example.
     // Someone actually messed up the data entry
@@ -59,7 +70,7 @@
   // filter data
   var filtered_data = [];
   var filtered_out = [];
-  for (var i = 0; i < schools.length - 1; i++) {
+  for (var i = 0; i < schools.length; i++) {
     isOpen = schools[i].ACTIVE.toUpperCase() == 'OPEN';
     isPublic = (schools[i].TYPE.toUpperCase() !== 'CHARTER' ||
                 schools[i].TYPE.toUpperCase() !== 'PRIVATE');
@@ -85,7 +96,7 @@
 
   // main loop
   var color;
-  for (var i = 0; i < filtered_data.length - 1; i++) {
+  for (var i = 0; i < filtered_data.length; i++) {
     isOpen = filtered_data[i].ACTIVE.toUpperCase() == 'OPEN';
     isPublic = (filtered_data[i].TYPE.toUpperCase() !== 'CHARTER' ||
                 filtered_data[i].TYPE.toUpperCase() !== 'PRIVATE');
